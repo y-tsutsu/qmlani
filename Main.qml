@@ -31,6 +31,7 @@ ApplicationWindow {
         height: 100
         x: 300
         y: 100
+        rotation: 90
         source: "sample.png"
         fillMode: Image.PreserveAspectFit
 
@@ -61,6 +62,7 @@ ApplicationWindow {
             animationY.stop()
             updatePoint(window.count)
             updateLabel(window.count)
+            updateRotation(window.count)
             animationX.start()
             animationY.start()
             window.count++
@@ -68,6 +70,7 @@ ApplicationWindow {
     }
 
     Component.onCompleted: {
+        label.text = "start!"
         timer.start()
     }
 
@@ -98,6 +101,19 @@ ApplicationWindow {
             label.text = "← : " + (c - 7)
         } else {
             label.text = "↑ : " + (c - 11)
+        }
+    }
+
+    function updateRotation(count) {
+        const c = count % 16
+        if (0 <= c && c <= 3) {
+            image.rotation = 90
+        } else if (4 <= c && c <= 7) {
+            image.rotation = 180
+        } else if (8 <= c && c <= 11) {
+            image.rotation = 270
+        } else {
+            image.rotation = 0
         }
     }
 }
