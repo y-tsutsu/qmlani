@@ -35,20 +35,29 @@ ApplicationWindow {
         source: "sample.png"
         fillMode: Image.PreserveAspectFit
 
-        NumberAnimation on x {
-            id: animationX
+        ParallelAnimation {
+            id: animation
             running: false
-            from: window.fromPoint.x
-            to: window.toPoint.x
-            duration: 1000
-        }
 
-        NumberAnimation on y {
-            id: animationY
-            running: false
-            from: window.fromPoint.y
-            to: window.toPoint.y
-            duration: 1000
+            NumberAnimation {
+                id: animationX
+                target: image
+                property: "x"
+                running: false
+                from: window.fromPoint.x
+                to: window.toPoint.x
+                duration: 1000
+            }
+
+            NumberAnimation {
+                id: animationY
+                target: image
+                property: "y"
+                running: false
+                from: window.fromPoint.y
+                to: window.toPoint.y
+                duration: 1000
+            }
         }
     }
 
@@ -58,13 +67,11 @@ ApplicationWindow {
         running: false
         repeat: true
         onTriggered: {
-            animationX.stop()
-            animationY.stop()
+            animation.stop()
             updatePoint(window.count)
             updateLabel(window.count)
             updateRotation(window.count)
-            animationX.start()
-            animationY.start()
+            animation.start()
             window.count++
         }
     }
